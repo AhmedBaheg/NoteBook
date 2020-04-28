@@ -1,0 +1,67 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TextInputLayout_Note_Dialog" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+<!--        <item name="android:textColorHint">#fff</item>-->
+<!--        <item name="colorControlNormal">#80FFFFFF</item>-->
+<!--        <item name="colorControlActivated">#fff</item>-->
+<!--        <item name="colorControlHighlight">#fff</item>-->
+<!--        <item name="android:textColor">#fff</item>-->
+<!--        <item name="android:textSize">20sp</item>-->
+
+        <item name="android:textColorHint">#fff</item>
+        <item name="boxStrokeColor">#fff</item>
+        <item name="colorControlHighlight">#fff</item>
+
+        <!--        <item name="errorTextAppearance">@style/ErrorAppearance</item>-->
+        <!--        <item name="hintTextAppearance">@style/HintAppearance</item>-->
+
+    </style>
+
+    <style name="TextInputLayout_Sign_Up" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <item name="android:textColorHint">#fff</item>
+        <item name="boxStrokeColor">#fff</item>
+        <item name="colorControlHighlight">#fff</item>
+
+    </style>
+
+    <style name="HintAppearance" parent="TextAppearance.Design.Hint">
+
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:fontFamily">serif</item>
+
+    </style>
+
+    <style name="HintAppearance_Sign_up" parent="TextAppearance.Design.Hint">
+
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:fontFamily">serif</item>
+
+    </style>
+
+    <style name="ErrorAppearance" parent="TextAppearance.Design.Error">
+
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:fontFamily">serif</item>
+
+    </style>
+
+    <style name="GenericProgressIndicator" parent="@android:style/Widget.ProgressBar.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:indeterminate">true</item>
+    </style>
+
+</resources>

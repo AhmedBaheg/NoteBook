@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "121033445302",
+    "firebase_url": "https://megastore-6482a.firebaseio.com",
+    "project_id": "megastore-6482a",
+    "storage_bucket": "megastore-6482a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121033445302:android:f49f4cc5fa08263fbdfb17",
+        "android_client_info": {
+          "package_name": "com.example.megastore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121033445302-t1kq7v9difc5ev3d7odovijsnb7lflf0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.megastore",
+            "certificate_hash": "16fee10f256e885da214cdcde0644fd53ba970c2"
+          }
+        },
+        {
+          "client_id": "121033445302-hvn2t9cra3nslqhv0dglkre0md1nafj6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCga0XRj7_hvQOkJt6JhKBF8A-oFClKQMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121033445302-hvn2t9cra3nslqhv0dglkre0md1nafj6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
