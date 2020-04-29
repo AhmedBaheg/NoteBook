@@ -135,8 +135,8 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                                progressBar.setVisibility(View.INVISIBLE);
                                 finish();
+                                progressBar.setVisibility(View.INVISIBLE);
                             } else {
                                 Toast.makeText(MainActivity.this, "Email or Password Incorrect", Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.INVISIBLE);

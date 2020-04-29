@@ -26,6 +26,8 @@ import com.example.megastore.ViewHolder.NoteViewHolder;
 import com.example.megastore.util.Constants;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,8 +44,10 @@ public class HomeActivity extends AppCompatActivity {
     String currentDate;
     ImageView add_Note;
     RecyclerView recyclerView;
+    FloatingActionButton btn_Log_Out;
     ListView listView;
     AddNoteDialog dialog;
+    UpdateNoteDialog updateNoteDialog;
     Note note;
     public ArrayList<Note> arrayList;
     NoteAdapter noteAdapter;
@@ -68,6 +72,18 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showDialog();
+            }
+        });
+
+        btn_Log_Out = findViewById(R.id.log_out);
+        btn_Log_Out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -106,7 +122,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void updateNotes() {
 
-        final UpdateNoteDialog updateNoteDialog = new UpdateNoteDialog(this);
+        updateNoteDialog = new UpdateNoteDialog(this);
         updateNoteDialog.show();
         databaseReference.child(NoteAdapter.id).addValueEventListener(new ValueEventListener() {
             @Override
