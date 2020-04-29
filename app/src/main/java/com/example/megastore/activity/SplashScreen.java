@@ -59,17 +59,24 @@ public class SplashScreen extends AppCompatActivity {
             // Show splash screen for 3 seconds
             new Timer().schedule(task, 5000);
         } else {
-            check();
+            updateUserUI();
         }
 
     }
 
-    private void check(){
+    private void updateUserUI(){
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                updateUserUI();
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        finish();
+                    }
+                };
+                new Timer().schedule(task , 5000);
             }
 
             @Override
@@ -78,17 +85,6 @@ public class SplashScreen extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void updateUserUI() {
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                finish();
-            }
-        };
-        new Timer().schedule(task , 5000);
     }
 
 }
