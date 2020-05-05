@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -28,7 +29,8 @@ public class SplashScreen extends AppCompatActivity {
     Animation animation;
     TextView text_Splash;
 
-    FirebaseUser user;
+    FirebaseUser firebaseUser;
+    FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
@@ -40,51 +42,39 @@ public class SplashScreen extends AppCompatActivity {
         text_Splash = findViewById(R.id.text_splash);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference(Constants.USERS);
+        databaseReference = firebaseDatabase.getReference();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animation);
         text_Splash.startAnimation(animation);
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    // go to the main activity
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(i);
-                    // kill current activity
-                    finish();
-                }
-            };
-            // Show splash screen for 3 seconds
-            new Timer().schedule(task, 5000);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingSplash();
+            }
+        }, 3500);
+
+    }
+
+    private void loadingSplash() {
+
+        if (firebaseUser != null) {
+            if (firebaseUser.isEmailVerified()) {
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                finish();
+            } else {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+        // if( firebaseUser == null )
         } else {
-            updateUserUI();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
     }
-
-    private void updateUserUI(){
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                        finish();
-                    }
-                };
-                new Timer().schedule(task , 5000);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
 }
+
+

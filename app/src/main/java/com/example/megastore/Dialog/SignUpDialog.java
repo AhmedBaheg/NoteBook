@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -124,25 +125,25 @@ public class SignUpDialog extends Dialog {
         if (str_Password.isEmpty()) {
             password.setError("Please Enter Your Password");
             return false;
-        }else if (str_Password.length() < 6){
+        } else if (str_Password.length() < 6) {
             password.setError("The Password Should Be More Than 6 Digits");
             return false;
-        }else {
+        } else {
             password.setError(null);
             return true;
         }
     }
 
-    public boolean validationConfirmPassword(){
+    public boolean validationConfirmPassword() {
         str_Confirm_Password = confirm_Password.getEditText().getText().toString();
         str_Password = password.getEditText().getText().toString();
-        if (str_Confirm_Password.isEmpty()){
+        if (str_Confirm_Password.isEmpty()) {
             confirm_Password.setError("Please Confirm Password");
             return false;
-        }else if (!str_Confirm_Password.equals(str_Password)){
+        } else if (!str_Confirm_Password.equals(str_Password)) {
             confirm_Password.setError("The Two Password Not Equals");
             return false;
-        }else {
+        } else {
             confirm_Password.setError(null);
             return true;
         }
@@ -157,47 +158,60 @@ public class SignUpDialog extends Dialog {
 
     private final static Pattern PATTERN_NAME = Pattern.compile("[\\u0600-\\u065F\\u066A-\\u06EF\\u06FA-\\u06FFa-zA-Z ]+[\\u0600-\\u065F\\u066A-\\u06EF\\u06FA-\\u06FFa-zA-Z-_ ]");
 
-    public void signUp(){
+    public void signUp() {
 
-        if (!validationFirstName()){
+        if (!validationFirstName()) {
             first_Name.requestFocus();
-        }else if (!validationLastName()){
+        } else if (!validationLastName()) {
             last_Name.requestFocus();
-        }else if (!validationEmail()){
+        } else if (!validationEmail()) {
             email.requestFocus();
-        }else if (!validationPassword()){
+        } else if (!validationPassword()) {
             password.requestFocus();
-        }else if (!validationConfirmPassword()){
+        } else if (!validationConfirmPassword()) {
             confirm_Password.requestFocus();
-        }else {
+        } else {
 
             progressBar.setVisibility(View.VISIBLE);
 
             final String fullName = str_First_Name + " " + str_Last_Name;
 
-            firebaseAuth.createUserWithEmailAndPassword(str_Email , str_Password)
+            firebaseAuth.createUserWithEmailAndPassword(str_Email, str_Password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            if (task.isSuccessful()){
+                            if (task.isSuccessful()) {
 
-                                User user = new User(fullName , str_Email);
-                                databaseReference.child(Constants.getUID())
-                                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
+                                firebaseAuth.getCurrentUser().sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
 
-                                        Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        dismiss();
+                                                if (task.isSuccessful()) {
+                                                    User user = new User(fullName, str_Email);
+                                                    databaseReference.child(Constants.getUID())
+                                                            .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
 
-                                    }
-                                });
+                                                            Toast.makeText(getContext(), "Please Verification Your Account", Toast.LENGTH_LONG).show();
+                                                            progressBar.setVisibility(View.INVISIBLE);
+                                                            dismiss();
 
-                            }else {
-                                String message = task.getException().getMessage();
-                                Toast.makeText(getContext(), "Error Occurred " + message, Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+
+                                                } else {
+                                                    String message = task.getException().getMessage().toString();
+                                                    Toast.makeText(getContext(), "Error Occurred " + message, Toast.LENGTH_SHORT).show();
+                                                    progressBar.setVisibility(View.INVISIBLE);
+                                                }
+                                            }
+                                        });
+
+                            } else {
+                                Toast.makeText(getContext(), "Your Email Already Exists", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.INVISIBLE);
                             }
 

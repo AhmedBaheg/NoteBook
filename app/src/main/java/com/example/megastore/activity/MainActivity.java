@@ -25,8 +25,8 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
 
     Button btn_Sign_up, btn_Login;
-    TextInputLayout email_Login, password_Login;
-    String str_Email_Login, str_Password_Login;
+    public TextInputLayout email_Login, password_Login;
+    public String str_Email_Login, str_Password_Login;
 
 //    LoadingDialog loadingDialog;
 
@@ -134,12 +134,17 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                                finish();
-                                progressBar.setVisibility(View.INVISIBLE);
+                                if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                                    finish();
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                }else {
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(MainActivity.this, "Please Check Your Email And Verify Your Account", Toast.LENGTH_LONG).show();
+                                }
                             } else {
-                                Toast.makeText(MainActivity.this, "Email or Password Incorrect", Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.INVISIBLE);
+                                Toast.makeText(MainActivity.this, "Email or Password Incorrect", Toast.LENGTH_LONG).show();
                             }
                         }
                     });

@@ -72,10 +72,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         }
     }
 
-    public NoteAdapter(Context context, ArrayList<Note> noteList, HomeActivity homeActivity) {
+    public NoteAdapter(Context context, HomeActivity homeActivity, ArrayList<Note> noteList) {
         this.context = context;
-        this.noteList = noteList;
         this.homeActivity = homeActivity;
+        this.noteList = noteList;
     }
 
 

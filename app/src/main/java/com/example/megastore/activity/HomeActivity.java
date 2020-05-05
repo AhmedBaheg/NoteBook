@@ -64,6 +64,7 @@ public class HomeActivity extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(Constants.USERS).child(Constants.getUID()).child(Constants.NOTES);
+        databaseReference.keepSynced(true);
 
         currentDate = new SimpleDateFormat(" EEEE\n dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
@@ -90,7 +91,6 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        databaseReference.keepSynced(true);
 //        showDataInRecyclerView();
         displayNotesRecyclerView();
 
@@ -210,7 +210,7 @@ public class HomeActivity extends AppCompatActivity {
                     note = snapshot.getValue(Note.class);
                     arrayList.add(0, note);
                 }
-                noteAdapter = new NoteAdapter(HomeActivity.this, arrayList, HomeActivity.this);
+                noteAdapter = new NoteAdapter(HomeActivity.this, HomeActivity.this, arrayList);
                 recyclerView.setAdapter(noteAdapter);
 //                returnDataInDialog();
 
