@@ -160,11 +160,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void saveData(String title, String body, String id, String date) {
-        if (id.isEmpty()) {
-            note = new Note(title, body, date);
-        } else {
-            note = new Note(title, body, id, date);
-        }
+        note = new Note(title, body, id, date);
         databaseReference.child(NoteAdapter.id).setValue(note);
     }
 
