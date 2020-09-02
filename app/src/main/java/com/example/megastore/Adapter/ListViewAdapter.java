@@ -34,7 +34,7 @@ public class ListViewAdapter extends ArrayAdapter<Note> {
 
         tv_Title = view.findViewById(R.id.tv_title);
 
-        Note note  = getItem(position);
+//        Note note  = getItem(position);
         tv_Title.setText(getItem(position).getTitle());
 
         return view;

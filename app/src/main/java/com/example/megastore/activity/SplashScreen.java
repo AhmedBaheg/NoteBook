@@ -30,9 +30,6 @@ public class SplashScreen extends AppCompatActivity {
     TextView text_Splash;
 
     FirebaseUser firebaseUser;
-    FirebaseAuth firebaseAuth;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +38,6 @@ public class SplashScreen extends AppCompatActivity {
 
         text_Splash = findViewById(R.id.text_splash);
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animation);
