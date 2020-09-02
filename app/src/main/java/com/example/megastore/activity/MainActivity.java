@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.megastore.Dialog.SignUpDialog;
 import com.example.megastore.R;
+import com.example.megastore.util.PreferenceUtils;
 import com.github.ybq.android.spinkit.style.Circle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -135,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                                    PreferenceUtils.saveEmail(str_Email_Login , MainActivity.this);
+                                    PreferenceUtils.savePassword(str_Password_Login , MainActivity.this);
                                     startActivity(new Intent(MainActivity.this, HomeActivity.class));
                                     finish();
                                     progressBar.setVisibility(View.INVISIBLE);

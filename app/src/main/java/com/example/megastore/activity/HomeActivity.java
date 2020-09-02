@@ -24,6 +24,7 @@ import com.example.megastore.Model.Note;
 import com.example.megastore.R;
 import com.example.megastore.ViewHolder.NoteViewHolder;
 import com.example.megastore.util.Constants;
+import com.example.megastore.util.PreferenceUtils;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -80,6 +81,8 @@ public class HomeActivity extends AppCompatActivity {
         btn_Log_Out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PreferenceUtils.saveEmail(null , HomeActivity.this);
+                PreferenceUtils.savePassword(null , HomeActivity.this);
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(HomeActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

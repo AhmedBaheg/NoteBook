@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.megastore.R;
 import com.example.megastore.util.Constants;
+import com.example.megastore.util.PreferenceUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -54,20 +55,28 @@ public class SplashScreen extends AppCompatActivity {
 
     private void loadingSplash() {
 
-        if (firebaseUser != null) {
-            if (firebaseUser.isEmailVerified()) {
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                finish();
-            } else {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
-            }
-        // if( firebaseUser == null )
+        if (PreferenceUtils.getEmail(this) != null || PreferenceUtils.getPassword(this) != null) {
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            finish();
         } else {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
+
+//        if (firebaseUser != null) {
+//            if (firebaseUser.isEmailVerified()) {
+//                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//                finish();
+//            } else {
+//                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//                finish();
+//            }
+//        // if( firebaseUser == null )
+//        } else {
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
 
     }
 }
